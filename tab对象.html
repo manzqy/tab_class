@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .tab {
+        margin: 100px auto;
+        width: 300px;
+      }
+      .title,
+      .content {
+        border: 1px solid #000;
+      }
+      .item {
+        float: left;
+        padding: 10px;
+        border-right: 1px solid #000;
+      }
+      .clearfix::after,
+      .clearfix::before {
+        display: table;
+        content: "";
+      }
+      .clearfix::after {
+        clear: both;
+      }
+      .clearfix {
+        *zoom: 1;
+      }
+      .text {
+        padding: 5px;
+        width: 100%;
+        height: 350px;
+        display: none;
+      }
+      .active {
+        background-color: yellow;
+      }
+      .green {
+        background-color: green;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tab">
+      <div class="title clearfix">
+        <div class="item green">阿毛</div>
+        <div class="item">阿狗</div>
+        <div class="item">阿妹</div>
+      </div>
+      <div class="content">
+        <div class="text show">阿毛你好111</div>
+        <div class="text">阿狗你好222</div>
+        <div class="text">阿妹你好333</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    //方法：1.添加事件 2.切换 3.显示与隐藏
+    class Tab {
+      constructor(custom) {
+        var option = {
+          selectorA: ".item",
+          selectorB: ".text",
+          type: "click",
+          bgName: "active",
+          ctName: "show"
+        };
+        Object.assign(option, custom);
+        Object.assign(this, option);
+        this.items = document.querySelectorAll(this.selectorA);
+        this.content = document.querySelectorAll(this.selectorB);
+        this.addEvent();
+      }
+      addEvent() {
+        this.items.forEach((e, i) => {
+          e.addEventListener(this.type, () => {
+            this.changeStyle(e);
+            this.controlDb(i);
+          });
+        });
+      }
+      changeStyle(one) {
+        this.items.forEach(e => {
+          e.classList.remove(this.bgName);
+        });
+        one.classList.add(this.bgName);
+      }
+      controlDb(eq) {
+        this.content.forEach(e => {
+          e.classList.remove(this.ctName);
+        });
+        this.content[eq].classList.add(this.ctName);
+      }
+    }
+    var tab = new Tab({
+      bgName: "green"
+    });
+    // tab.addEvent();
+  </script>
+</html>

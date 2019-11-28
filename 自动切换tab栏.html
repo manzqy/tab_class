@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .tab {
+        margin: 100px auto;
+        width: 300px;
+      }
+      .title,
+      .content {
+        border: 1px solid #000;
+      }
+      .item {
+        float: left;
+        padding: 10px;
+        border-right: 1px solid #000;
+      }
+      .clearfix::after,
+      .clearfix::before {
+        display: table;
+        content: "";
+      }
+      .clearfix::after {
+        clear: both;
+      }
+      .clearfix {
+        *zoom: 1;
+      }
+      .text {
+        padding: 5px;
+        width: 100%;
+        height: 350px;
+        display: none;
+      }
+      .active {
+        background-color: yellow;
+      }
+      .green {
+        background-color: green;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tab">
+      <div class="title clearfix">
+        <div class="item green">阿毛</div>
+        <div class="item">阿狗</div>
+        <div class="item">阿妹</div>
+      </div>
+      <div class="content">
+        <div class="text show">阿毛你好111</div>
+        <div class="text">阿狗你好222</div>
+        <div class="text">阿妹你好333</div>
+      </div>
+    </div>
+  </body>
+  <script src="./tab.js"></script>
+  <script>
+    class TogTab extends Tab {
+      constructor(suibian) {
+        suibian = suibian || {};
+        super(suibian);
+        this.duration = suibian.duration || 1000;
+        this.index = suibian.index || 0;
+        this.autoPlay();
+      }
+      autoPlay() {
+        setInterval(e => {
+          this.index++;
+          this.index %= this.items.length;
+          this.changeStyle(this.items[this.index]);
+          this.controlDb(this.index);
+        }, this.duration);
+      }
+    }
+    var autoTab = new TogTab({
+      bgName: "green",
+      duration: 2000
+    });
+  </script>
+</html>
